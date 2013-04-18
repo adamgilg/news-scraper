@@ -1,0 +1,6 @@
+<div class="well">
+  <% @stories.each do |story| %>
+    <%= link_to story.headline, story.url %>
+    <%= story.summary %>
+  <% end %>
+</div>
