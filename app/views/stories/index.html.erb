@@ -1,6 +1,15 @@
-<div class="well">
-  <% @stories.each do |story| %>
-    <%= link_to story.headline, story.url %>
-    <%= story.summary %>
-  <% end %>
+<div class="row">
+  <div id="header" class="well span8 offset2">
+    The top five stories from CNN.com's 'The Latest' section, updated every ten minutes.
+  </div>
 </div>
+<% @stories.each do |story| %>
+  <div class='row'>
+    <div class='story well span6 offset3'>
+      <strong>
+        <%= link_to story.headline, story.url %>
+      </strong>
+      <%= story.summary %>
+    </div>
+  </div>
+<% end %>
