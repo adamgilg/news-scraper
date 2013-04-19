@@ -7,7 +7,7 @@ task fetch_stories: :environment do
   url = 'http://www.cnn.com/'
   doc = Nokogiri::HTML(open(url))
   news = doc.at('h4:contains("LATEST")').next_element.next_element
-  links = news.css('a').map { |n| n.attributes['href'].value }
+  links = news.css('a').map { |n| n.attributes['href'].value }.uniq
   # p links
 
   5.times do |i|
@@ -19,8 +19,8 @@ task fetch_stories: :environment do
         story.update_attribute(:headline, url)
         story.update_attribute(:summary, "video")
       else
-        story.update_attribute(:headline, doc.css('h1').text)
-        story.update_attribute(:summary, doc.css('p').first.text)
+        story.update_attribute(:headline, doc.css('title').text)
+        story.update_attribute(:summary, doc.xpath('//*[@id="cnnContentContainer"]/h1/text()'))
       end
       story.update_attribute(:url, url)
     else
