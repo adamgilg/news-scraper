@@ -15,13 +15,14 @@ task fetch_stories: :environment do
     doc = Nokogiri::HTML(open(url))
     if Story.all.length == 5
       story = Story.find_by_order(i)
-      if story.headline.size > 255
+      if doc.css('h1').text.size > 255
         story.update_attribute(:headline, url)
+        story.update_attribute(:summary, "video")
       else
         story.update_attribute(:headline, doc.css('h1').text)
+        story.update_attribute(:summary, doc.css('p').first.text)
       end
       story.update_attribute(:url, url)
-      story.update_attribute(:summary, doc.css('p').first.text)
     else
       Story.create(headline: doc.css('h1').text,
             url: url, summary: doc.css('p').first.text,
