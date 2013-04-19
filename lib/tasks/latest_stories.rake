@@ -11,7 +11,11 @@ task fetch_stories: :environment do
   # p links
 
   5.times do |i|
-    url = "http://www.cnn.com#{links[i]}"
+    if links[i].match(/^(http)/)
+      url = links[i]
+    else
+      url = "http://www.cnn.com/#{links[i]}"
+    end
     doc = Nokogiri::HTML(open(url))
     if Story.all.length == 5
       story = Story.find_by_order(i)
