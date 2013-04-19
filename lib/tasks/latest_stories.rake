@@ -19,7 +19,7 @@ task fetch_stories: :environment do
         story.update_attribute(:headline, url)
         story.update_attribute(:summary, "video")
       else
-        story.update_attribute(:headline, doc.css('title').text)
+        story.update_attribute(:headline, doc.css('h1').text)
         story.update_attribute(:summary, doc.css('p').first.text)
       end
       story.update_attribute(:url, url)
